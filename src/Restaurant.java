@@ -50,6 +50,13 @@ public class Restaurant {
         return true;
     }
 
+    private void handleOrdersMenu() {
+        System.out.println("1. Lägg till beställning");
+        System.out.println("2. Ta bort beställning");
+        System.out.println("3. Se alla beställningar");
+        System.out.println("4. ");
+
+    }
 
     private void handlePersonnelMenu() {
         while (true)
@@ -58,7 +65,7 @@ public class Restaurant {
             if(!handlePersonnelMenuChoice())
             {
                 return;
-            };
+            }
         }
 
     }
@@ -92,7 +99,7 @@ public class Restaurant {
         }
         else
         {
-            System.out.printf("Förnamn: %s, Efternamn %s, Personnummer %s, roll: %n", staff.firstName, staff.lastName, staff.SSN);
+            System.out.printf("Förnamn: %s, Efternamn %s, Personnummer %s, roll: %n", staff.getFirstName(), staff.getLastName(), staff.getSSN());
         }
     }
 
@@ -101,7 +108,7 @@ public class Restaurant {
 
         for (Staff staff : allStaff)
         {
-            System.out.printf("Förnamn: %s, Efternamn %s, Personnummer %s, roll: %s%n", staff.firstName, staff.lastName, staff.SSN, staff.role);
+            System.out.printf("Förnamn: %s, Efternamn %s, Personnummer %s, roll: %s%n", staff.getFirstName(), staff.getLastName(), staff.getSSN(), staff.getRole());
         }
     }
 
@@ -210,7 +217,7 @@ public class Restaurant {
         }
         else
         {
-            System.out.printf("Namn: %s, Pris: %s, Beskrivning: %s%n", dish.name, dish.price, dish.desc);
+            System.out.printf("Namn: %s, Pris: %s, Beskrivning: %s%n", dish.getName(), dish.getPrice(), dish.getDesc());
         }
     }
 
@@ -220,7 +227,7 @@ public class Restaurant {
 
         for (Dish dish : dishes)
         {
-            System.out.printf("Namn: %s, Pris: %s, Beskrivning: %s%n", dish.name, dish.price, dish.desc);
+            System.out.printf("Namn: %s, Pris: %s, Beskrivning: %s%n", dish.getName(), dish.getPrice(), dish.getDesc());
         }
     }
 

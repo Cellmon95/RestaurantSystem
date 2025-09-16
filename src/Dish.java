@@ -1,8 +1,8 @@
 public class Dish {
 
-    String name;
-    double price;
-    String desc;
+    private final String name;
+    private final double price;
+    private final String desc;
 
     public String getName() {
         return name;

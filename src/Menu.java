@@ -33,7 +33,7 @@ public class Menu {
     {
         for (Dish menuDish : menuDishes)
         {
-            if (menuDish.name.equalsIgnoreCase(dishName))
+            if (menuDish.getName().equalsIgnoreCase(dishName))
             {
                 menuDishes.remove(menuDish);
                 return true;
@@ -46,7 +46,7 @@ public class Menu {
     public Dish getDish(String dishName) {
         for (Dish menuItem : menuDishes)
         {
-            if (menuItem.name.equalsIgnoreCase(dishName)) {
+            if (menuItem.getName().equalsIgnoreCase(dishName)) {
                 return  menuItem;
             }
         }

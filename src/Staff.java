@@ -1,9 +1,9 @@
 public class Staff {
 
-    String firstName;
-    String lastName;
-    StaffRole role;
-    String SSN;
+    private final String firstName;
+    private final String lastName;
+    private final StaffRole role;
+    private final String SSN;
 
     public String getSSN() {
         return SSN;
