@@ -53,10 +53,28 @@ public class Restaurant {
 
     private void handlePersonnelMenu() {
         displayPersonnelMenu();
+        handlePersonnelMenuChoice();
+    }
+
+    private void handlePersonnelMenuChoice() {
+        int choice =  scanner.nextInt();
+        scanner.nextLine();
+        switch (choice)
+        {
+            case 1 -> {handleAddPersonnel();}
+        }
+    }
+
+    private void handleAddPersonnel() {
+
     }
 
     private void displayPersonnelMenu() {
-
+        System.out.println("1. Lägg till personal");
+        System.out.println("2. Ta bort personal");
+        System.out.println("3. Se all personal");
+        System.out.println("4. Se specifik personal");
+        System.out.println("0. Gå tillbaka.");
     }
 
     private void handleDishMenu() {
