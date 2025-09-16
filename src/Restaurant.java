@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -6,7 +5,7 @@ public class Restaurant {
 
     Kitchen kitchen;
     Menu menu;
-    List<Staff> staff;
+    StaffList staffList;
 
     boolean open;
 
@@ -16,7 +15,7 @@ public class Restaurant {
     public Restaurant() {
         kitchen = new Kitchen();
         menu = new Menu();
-        staff = new ArrayList<>();
+        staffList = new StaffList();
 
         scanner = new Scanner(System.in);
 
@@ -51,22 +50,117 @@ public class Restaurant {
         return true;
     }
 
+
     private void handlePersonnelMenu() {
-        displayPersonnelMenu();
-        handlePersonnelMenuChoice();
+        while (true)
+        {
+            displayPersonnelMenu();
+            if(!handlePersonnelMenuChoice())
+            {
+                return;
+            };
+        }
+
     }
 
-    private void handlePersonnelMenuChoice() {
+    private boolean handlePersonnelMenuChoice() {
         int choice =  scanner.nextInt();
         scanner.nextLine();
         switch (choice)
         {
-            case 1 -> {handleAddPersonnel();}
+            case 1 -> handleAddPersonnel();
+            case 2 -> handleRemovePersonnel();
+            case 3 -> handleSeeAllPersonnel();
+            case 4 -> handleSeeSpecificPersonnel();
+            case 0 -> {
+            return false;
+        }
+            default -> System.out.println("Felaktigt val.");
+        }
+        return true;
+    }
+
+    private void handleSeeSpecificPersonnel() {
+        System.out.println("Skriv in personnummer på personen du vill se");
+        String SSN = scanner.nextLine();
+
+        Staff staff = staffList.getStaff(SSN);
+
+        if (staff == null)
+        {
+            System.out.println("Personen finns inte");
+        }
+        else
+        {
+            System.out.printf("Förnamn: %s, Efternamn %s, Personnummer %s, roll: %n", staff.firstName, staff.lastName, staff.SSN);
+        }
+    }
+
+    private void handleSeeAllPersonnel() {
+        List<Staff> allStaff = staffList.getAllStaff();
+
+        for (Staff staff : allStaff)
+        {
+            System.out.printf("Förnamn: %s, Efternamn %s, Personnummer %s, roll: %s%n", staff.firstName, staff.lastName, staff.SSN, staff.role);
+        }
+    }
+
+    private void handleRemovePersonnel() {
+        System.out.println("Skriv in personnummer på den du vill ta bort");
+        String SSN = scanner.nextLine();
+
+        if (staffList.removeStaff(SSN))
+        {
+            System.out.println("Personen borttagen.");
+        }
+        else
+        {
+            System.out.println("Personen finns inte.");
         }
     }
 
     private void handleAddPersonnel() {
+        System.out.println("Skriv in förnamn");
+        String firstName = scanner.nextLine();
 
+        System.out.println("Skriv in efternamn");
+        String lastName = scanner.nextLine();
+
+        System.out.println("Skriv in personnummer");
+        String SSN = scanner.nextLine();
+
+
+        StaffRole staffRole = null;
+        boolean running;
+
+        do
+        {
+        running = false;
+
+        System.out.println("Välj roll");
+        System.out.println("1. Köksmästare");
+        System.out.println("2. Kock");
+        System.out.println("3. Servitör");
+        System.out.println("4. Bartender");
+
+        int choice = scanner.nextInt();
+        scanner.nextLine();
+
+        switch (choice){
+                case 1 -> staffRole = StaffRole.CHEF;
+                case 2 -> staffRole = StaffRole.COOK;
+                case 3 -> staffRole = StaffRole.SERVER;
+                case 4 -> staffRole = StaffRole.BARTENDER;
+                default -> {
+                    System.out.println("Felaktigt val");
+                    running = true;
+                }
+            }
+        } while (running);
+
+        staffList.addStaff(new Staff(firstName, lastName, SSN, staffRole));
+
+        System.out.println("Personen har lagts till.");
     }
 
     private void displayPersonnelMenu() {
@@ -81,7 +175,7 @@ public class Restaurant {
         while(true)
         {
             displayMenuHandlingMenu();
-            if (handleDishMenuChoice())
+            if (!handleDishMenuChoice())
                 return;
         }
     }
@@ -97,14 +191,16 @@ public class Restaurant {
             case 3 -> showAllDishes();
             case 4 -> showSpecificDish();
             case 0 -> {
-                return true;
+                return false;
             }
         }
 
-        return false;
+        return true;
     }
 
     private void showSpecificDish() {
+        System.out.println("Skriv namn på rätten du vill se.");
+
         String dishName = scanner.nextLine();
         Dish dish = menu.getDish(dishName);
 
@@ -169,12 +265,12 @@ public class Restaurant {
         if (open)
         {
             open = false;
-            System.out.println("Resturangen är nu stängd.");
+            System.out.println("Restaurangen är nu stängd.");
         }
         else
         {
             open = true;
-            System.out.println("Resturangen är nu öppen.");
+            System.out.println("Restaurangen är nu öppen.");
         }
     }
 
@@ -182,10 +278,10 @@ public class Restaurant {
 
             System.out.println("Gör val:");
             if (!open){
-                System.out.println("1. Öppna resturangen");
+                System.out.println("1. Öppna restaurangen");
             }
             else {
-                System.out.println("1. Stäng resturangen");
+                System.out.println("1. Stäng restaurangen");
                 System.out.println("2. Hantera meny");
                 System.out.println("3. Hantera personal");
             }
