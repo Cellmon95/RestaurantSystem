@@ -20,6 +20,10 @@ public class Restaurant {
 
         scanner = new Scanner(System.in);
 
+        start();
+    }
+
+    private void start() {
         while(true)
         {
             displayMainMenu();
@@ -28,7 +32,6 @@ public class Restaurant {
                 return;
             }
         }
-
     }
 
     private boolean handleMainMenuChoice() {
@@ -40,6 +43,7 @@ public class Restaurant {
         {
             case 1 -> closeOpenRestaurant();
             case 2 -> handleDishMenu();
+            case 3 -> handlePersonnelMenu();
             case 0 -> {
             return false;
         }
@@ -47,11 +51,19 @@ public class Restaurant {
         return true;
     }
 
+    private void handlePersonnelMenu() {
+        displayPersonnelMenu();
+    }
+
+    private void displayPersonnelMenu() {
+
+    }
+
     private void handleDishMenu() {
         while(true)
         {
             displayMenuHandlingMenu();
-            if (!handleDishMenuChoice())
+            if (handleDishMenuChoice())
                 return;
         }
     }
@@ -65,12 +77,27 @@ public class Restaurant {
             case 1 -> handleAddDish();
             case 2 -> handleRemoveDish();
             case 3 -> showAllDishes();
+            case 4 -> showSpecificDish();
             case 0 -> {
                 return true;
             }
         }
 
         return false;
+    }
+
+    private void showSpecificDish() {
+        String dishName = scanner.nextLine();
+        Dish dish = menu.getDish(dishName);
+
+        if (dish == null)
+        {
+            System.out.println("Den rätten finns inte.");
+        }
+        else
+        {
+            System.out.printf("Namn: %s, Pris: %s, Beskrivning: %s%n", dish.name, dish.price, dish.desc);
+        }
     }
 
 
@@ -136,7 +163,7 @@ public class Restaurant {
     private void displayMainMenu() {
 
             System.out.println("Gör val:");
-            if (open){
+            if (!open){
                 System.out.println("1. Öppna resturangen");
             }
             else {
